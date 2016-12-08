@@ -25,6 +25,7 @@ uint8_t data1 = 0b00000001; // for first shift register
 uint8_t data2 = 0b11111110; // second shift register
 uint8_t inOut = 0b00001111;
 
+// foor checking when the buttons are pressed
 uint8_t button1 = 0b00010000;
 uint8_t button2 = 0b00100000;
 uint8_t button3 = 0b01000000;
