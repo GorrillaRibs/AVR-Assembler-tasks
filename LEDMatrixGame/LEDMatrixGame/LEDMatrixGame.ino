@@ -148,16 +148,16 @@ void setup() {
 
 
                 "shiftOut: \n"
-                "CBI 0x0B, 0x02 \n" // set clock low
+                "CBI 0x0B, 0x01 \n" // set clock low
                 "MOV r15, r11 \n" // backup the data
                 "AND r15, r21 \n" // mask the data, so we only get one byte
                 "CP r15, r8 \n" // compare the ANDed data with zero
                 "BREQ set0 \n" // if equal to zero
-                "SBI 0x0B, 0x04 \n"
+                "SBI 0x0B, 0x03 \n"
                 "RJMP back \n"
 
                 "set0: \n"
-                "CBI 0x0B, 0x04 \n"
+                "CBI 0x0B, 0x02 \n"
                 "RJMP back \n"
 
                 "back: \n"
@@ -165,7 +165,7 @@ void setup() {
                 "CP r25, r8 \n" // see if I've looped enough
                 "BREQ stopShifting \n" // go back to the start
                 "LSL r21 \n" // shift the mask left
-                "SBI 0x0B, 0x02 \n" // set clock high
+                "SBI 0x0B, 0x01 \n" // set clock high
                 "RJMP shiftOut \n" // jump back to the start of this loop
 
 
@@ -173,7 +173,7 @@ void setup() {
                 "INC r10 \n"
                 "CP r10, r1 \n"
                 "BREQ shiftOutData2 \n"
-                "SBI 0x0B, 0x03 \n"
+                "SBI 0x0B, 0x02 \n"
                 "NOP \n" // nope
                 "RET \n"
 
