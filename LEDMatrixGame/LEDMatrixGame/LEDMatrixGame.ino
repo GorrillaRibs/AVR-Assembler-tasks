@@ -139,11 +139,11 @@ void setup() {
 
 
                 "shiftOutData: \n"
-                "LDS r11, data1 \n"
+                "LDS r11, data2 \n"
                 "RCALL shiftOut \n"
 
                 "shiftOutData2: \n"
-                "LDS r11, data2 \n"
+                "LDS r11, data1 \n"
                 "RCALL shiftOut \n"
 
 
