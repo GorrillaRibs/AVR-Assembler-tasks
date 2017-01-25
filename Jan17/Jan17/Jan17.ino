@@ -8,7 +8,7 @@ void setup(){
 }
 void loop() {
 
-   for (int i=100; i<255; i++) {
+   for (int i=0; i<1024; i++) {
         Serial.println(i);
          analogWrite(11,i);
          delay(30);
