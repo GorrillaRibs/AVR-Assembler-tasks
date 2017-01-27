@@ -4,12 +4,13 @@ AVR Assembler code used to create a sound using Timer2
 Code by: Robert Raffaele "GorrillaRibs" Miller
 */
 
+#include <Arduino.h>
 #include "avr/io.h"
 #define OVF 4;
 #define INCR 1;
 
 void setup() {
-  Serial.begin(9600);
+//  Serial.begin(9600);
   asm(
 ".global setup \n"
     "setup: \n"
