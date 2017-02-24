@@ -1,0 +1,39 @@
+
+; ALL OF THIS PERTAINS TO PSY's "asmn64.exe"
+; THIS ASSEMBLER TAKES "$" INSTEAD OF "0x" IN HEX NUMBERS ;
+
+; SYNTAX NOTES ;
+
+; li - load a value into a register (LDI)
+; la - load a label into a register (i.e. la t1, LABEL)
+
+; ADD, SUB, MUL and DIV are all present, though they all take 3 operands -
+; i.e. MUL t1, t2, t3 <==> t1 = t2 (operand) t3
+; All of these operations also take signed numbers as well as unsigned
+
+; BRANCH instructions include -
+; bne - branch not equal (bne t1, t2, LABEL)
+; bnez - branch not equal to zero (bnez t1, LABEL)
+; beq - branch equal to (beq t1, t2, LABEL)
+; blt - Branch if less than (blt t1, t2, LABEL), if t1 < t2
+; bgt - branch if greater than (blt t1, t2, LABEL), if t1 > t2
+; ble - branch if less or equal to (ble t1, t2, LABEL), if t1 <= t2
+; bge - branch if greater or equal to (bge t1, t2, LABEL), if t1 >= t2
+; Add "U" to the end of any instruction (i.e. bneu, bequ) to compare unsigned numbers
+
+
+; REGISTER NOTES ;
+; R0    - forever 0
+;	AT    - ???, but takes values like t0 -> t7
+;	V0-V1 - ???
+;	A0-A3 - Are used to pass parameters to subroutines.
+;	T0-T7 - Temporary data registers, akin to r0 -> r30 in AVR
+;	S0-S7 - Called "Save" or "Saved" registers (preserved across subroutine calls??)
+;	T8-T9 - Don't know, maybe same as other 'T' registers
+;	K0-K1 - ???
+;	GP    - ???
+;	SP    - See AT reg
+;	S8    - ???
+;	RA    - Stores the Return Address for subroutine calls
+
+; VI (Video Interface) regs are mapped in memory starting at 0xA4400000 ($A4400000 in code)
