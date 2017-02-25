@@ -17,7 +17,7 @@
 
 // define some null-terminated strings
 label:
-.asciz "This is a label..."   //
+.asciz "This is a label..."
 gpLabel:
 .asciz  "32 GP Registers:\n"
 ioLabel:
@@ -28,10 +28,13 @@ exLabel:
 
 .global setup
 setup:
-/*
+
+
   ldi r25,BAUD9600 >> 8       ; pass the preferred BAUD rate to the initUART function
   ldi r24,BAUD9600            ;
   call initUART               ;
+
+  /*
 
   ldi ZH,hi8(gpLabel)         ; obtain the address of the General Purpose Register label
   ldi ZL,lo8(gpLabel)         ;

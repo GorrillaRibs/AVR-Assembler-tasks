@@ -17,8 +17,8 @@
  printExRegs                ; scrolls through SRAM dumping all Extended register contents
  breakPoint                 ; dumps the contents of the GP registers and enters an infinite loop
  wait                       ; delay for 250ms
-
 */
+
 .global initUART
 initUART:
   sts UBRR0H, r25                 //The UBRR0H and L registers control the baud rate
@@ -30,3 +30,55 @@ initUART:
   ldi r16, 3 << UCSZ00            //Set the UCSZ00 and UCSZ01 bits so we get an 8 bit data size (enough for char)
   sts UCSR0C, r16                 //Data is 8 bit data size
  ret
+
+/*
+.global printStrLn
+printStrLn:
+  CALL printStr
+  CALL printLn
+ret
+
+.global printStr
+printStr:
+1:
+  LPM r25, Z+
+  CPI r25, 0
+  breq out
+  CALL printChar
+  CALL wait
+  RJMP 1b
+  out:
+ret
+
+
+.global printLn
+printLn:
+LDI r25, newline
+CALL printChar
+ret
+
+
+.global printChar
+printChar:
+; 1:
+LDS r16, UCSR0 // CHECK SPELLING
+SBRS r16, UDRE0
+; RJMP 1
+STS UDR0, r25
+ret
+
+
+.global wait
+wait:
+ldi  r18, 21
+ldi  r19, 75
+ldi  r20, 190
+L1: dec  r20
+brne L1
+dec  r19
+brne L1
+dec  r18
+brne L1
+rjmp PC+1
+ret
+*/
