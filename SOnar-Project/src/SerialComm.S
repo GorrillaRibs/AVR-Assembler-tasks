@@ -81,7 +81,7 @@ dec  r18
 brne L1
 rjmp PC+1
 ret
-*/
+
 
 
 .global printReg
@@ -98,3 +98,4 @@ CALL printByte
 LDI r25, tab
 CALL printChar
 ret
+*/

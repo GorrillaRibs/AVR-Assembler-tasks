@@ -29,7 +29,6 @@ exLabel:
 .global setup
 setup:
 
-
   ldi r25,BAUD9600 >> 8       ; pass the preferred BAUD rate to the initUART function
   ldi r24,BAUD9600            ;
   call initUART               ;
