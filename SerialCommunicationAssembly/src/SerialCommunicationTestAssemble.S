@@ -33,7 +33,6 @@ setup:
   ldi r24,BAUD9600            ;
   call initUART               ;
 
-  /*
 
   ldi ZH,hi8(gpLabel)         ; obtain the address of the General Purpose Register label
   ldi ZL,lo8(gpLabel)         ;
@@ -81,7 +80,7 @@ again:
   dec r23
   breq done
   rjmp again
-*/
+
 
 done:
 ret

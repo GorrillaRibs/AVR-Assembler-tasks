@@ -29,73 +29,81 @@ initUART:
   sts UCSR0B, r16                 //Set both even though we're only transmitting to serial monitor in this example
   ldi r16, 3 << UCSZ00            //Set the UCSZ00 and UCSZ01 bits so we get an 8 bit data size (enough for char)
   sts UCSR0C, r16                 //Data is 8 bit data size
- ret
+ret
 
-/*
 .global printStrLn
 printStrLn:
-  CALL printStr
-  CALL printLn
+  call printStr
+  call printLn
 ret
 
 .global printStr
 printStr:
-1:
-  LPM r25, Z+
-  CPI r25, 0
+PrintStr1:
+  lpm r25, Z+
+  cpi r25, 0
   breq out
-  CALL printChar
-  CALL wait
-  RJMP 1b
+  call printChar
+  call wait
+  rjmp PrintStr1
   out:
 ret
 
+.global printChar
+printChar:
+  PrintChar1:
+  lds r16, UCSR0A
+  sbrs r16, UDRE0
+  rjmp PrintChar1
+  sts UDR0, r25
+  ret
 
 .global printLn
 printLn:
-LDI r25, newline
-CALL printChar
-ret
+  ldi r25, '\n
+  call printChar
+  ret
 
-
-.global printChar
-printChar:
-; 1:
-LDS r16, UCSR0 // CHECK SPELLING
-SBRS r16, UDRE0
-; RJMP 1
-STS UDR0, r25
-ret
-
-
-.global wait
-wait:
-ldi  r18, 21
-ldi  r19, 75
-ldi  r20, 190
-L1: dec  r20
-brne L1
-dec  r19
-brne L1
-dec  r18
-brne L1
-rjmp PC+1
-ret
-
-
+.global printByte; DEC
+printByte:
+  push r22
+  mov r22, r25
+  ldi r25, '0
+  PrintByte2:
+  subi r22, 100
+  brlo PrintByte1
+  inc r25
+  rjmp PrintByte2
+  PrintByte1:
+  call printChar
+  cpi r22, 0
+  breq PrintByte1
+  ret
 
 .global printReg
 printReg:
-PUSH r25
-LDI r25, 'r
-CALL printChar
-POP r25
-CALL printByte
-LDI r25, '=
-CALL printChar
-MOV r25, r24
-CALL printByte
-LDI r25, tab
-CALL printChar
+  push r25
+  ldi r25, 'r
+  call printChar
+  pop r25
+  call printByte
+  ldi r25, '=
+  call printChar
+  mov r25, r24
+  call printByte
+  ldi r25, '\t
+  call printChar
+  ret
+
+.global printGPRegs
+printGPRegs:
+  clr ZH
+  clr ZL
+  mov r25, ZL
+  ld r24, Z+
+  call printReg
+  ret
+
+.global wait
+wait:
 ret
-*/

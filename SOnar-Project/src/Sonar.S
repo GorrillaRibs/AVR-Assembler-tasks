@@ -9,18 +9,20 @@
 setup:
 
 SBI _SFR_IO_ADDR(DDRB), DDB1
-; Set a pin to input for the data from ultrasonic sensor
-LDI r16, 1 << COM1A0
 
-; Timer setup starts=
+; Set a pin to input for the data from ultrasonic sensor
+
+LDI r16, (1 << COM1A0) | (1 << WGM13) | (1 << WGM12) | (1 << WGM11) | (1 << WGM10)
+; Timer setup starts
 STS TCCR1A, r16
 STS TCNT1H, r16  ; high byte
 STS TCNT1L, r16  ; low byte
-LDI r16, 0x04 
+LDI r16, 0x04
 STS TCCR1B, r16  ; load a prescaler
 LDI r16, 1 << TOIE1
 STS TIMSK1, r16
 ; Timer setup ends
+
 
 ; Connect the 'trigger' pin on the ultrasonic seonsor, so the pulse on this pin triggers it
 LDI r16, 0xFF
