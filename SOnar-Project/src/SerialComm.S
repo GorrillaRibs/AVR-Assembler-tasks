@@ -51,11 +51,12 @@ ret
 
 .global printChar
 printChar:
-  PrintChar1:
+  printChar1:
   lds r16, UCSR0A
   sbrs r16, UDRE0
-  rjmp PrintChar1
+  rjmp printChar1
   sts UDR0, r25
+
   ret
 
 .global printLn

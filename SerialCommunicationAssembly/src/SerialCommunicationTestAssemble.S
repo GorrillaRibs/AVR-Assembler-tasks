@@ -37,9 +37,9 @@ setup:
   ldi ZH,hi8(gpLabel)         ; obtain the address of the General Purpose Register label
   ldi ZL,lo8(gpLabel)         ;
   call printStr               ; transmit it...
-  call printGPRegs            ; transmit contents of GP Registers in a readable format
+  // call printGPRegs            ; transmit contents of GP Registers in a readable format
   call printLn                ;
-
+/*
   ldi ZH,hi8(ioLabel)         ; obtain the address of the Input/Output Register label
   ldi ZL,lo8(ioLabel)         ;
   call printStr               ; transmit it
@@ -81,7 +81,7 @@ again:
   breq done
   rjmp again
 
-
+*/
 done:
 ret
 
