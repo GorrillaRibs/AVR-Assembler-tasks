@@ -17,10 +17,10 @@
 ; No less than 7 sacrifices to Cthulu required to function
 .global setup
 setup:
-CALL Timer1Setup
 LDI r25,BAUD9600 >> 8       ; pass the preferred BAUD rate to the initUART function
 LDI r24,BAUD9600            ;
-CALL initUART               ;
+CALL initUART
+CALL Timer1Setup
 RET
 
 .global Timer1Setup
@@ -54,20 +54,7 @@ IN r16,_SFR_IO_ADDR(PORTB) ; read the port
 LDI r17,1<<trig ; prepare the bit(s) to toggle
 EOR r16,r17 ; toggle the bit(s), leaving the others unaffected
 OUT _SFR_IO_ADDR(PORTB),r16 ; update the port
-MOV r25, r16 // DATA?????
+MOV r25, r16 ; DATA?????
 CALL printChar
 CALL printLn
-RETI // YETI
-
-delay:
-ldi  r19, 61
-ldi  r20, 225
-ldi  r21, 64
-L1:
-dec  r21
-brne L1
-dec  r20
-brne L1
-dec  r19
-brne L1
-ret
+RETI ; YETI
