@@ -54,7 +54,7 @@ IN r16,_SFR_IO_ADDR(PORTB) ; read the port
 LDI r17,1<<trig ; prepare the bit(s) to toggle
 EOR r16,r17 ; toggle the bit(s), leaving the others unaffected
 OUT _SFR_IO_ADDR(PORTB),r16 ; update the port
-LDI r25, 0 // DATA?????
+MOV r25, r16 // DATA?????
 CALL printChar
 CALL printLn
 RETI // YETI

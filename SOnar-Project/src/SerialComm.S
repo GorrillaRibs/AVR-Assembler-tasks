@@ -56,7 +56,6 @@ printChar:
   sbrs r16, UDRE0
   rjmp printChar1
   sts UDR0, r25
-
   ret
 
 .global printLn
