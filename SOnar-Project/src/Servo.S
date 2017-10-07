@@ -5,7 +5,8 @@
 #include "avr/io.h"
 #include <ASCII.h>
 #define BAUD9600 103           //(((F_CPU / (BAUDRATE * 16))) - 1)
-#define data 65                //ASCII value translates to 'A' or '\A
+
+; All Serial functions load off of Regs 24 & 25
 
 ;gpLabel:
 ;.asciz  "32 GP Registers:\n"
@@ -52,21 +53,25 @@ TIMER1_OVF_vect:
 INC r17
 SBRS r17, 0
 RJMP even
+
 odd:
 LDI r16, 0x86 ; 34331
 STS OCR1BH, r16
 LDI r16, 0x1B
 STS OCR1BL, r16
 RJMP end
+
 even:
 LDI r16, 0x97 ; 38827
 STS OCR1BH, r16
 LDI r16, 0xAB
 STS OCR1BL, r16
+
 end:
 CALL delay
 RETI // YETI
 
+; Courtesy of AVR Delay creater
 delay:
 ldi  r19, 61
 ldi  r20, 225

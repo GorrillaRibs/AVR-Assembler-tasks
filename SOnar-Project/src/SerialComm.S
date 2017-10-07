@@ -1,5 +1,9 @@
 #include <avr/io.h>
 #include <ASCII.h>
+
+#define baudHigh UBRR0H
+#define baudLow UBRR0L
+
 /*
  Implemented functions r25,r24,... holds the parameter(s)
  initUART                   ; receives the 16-bit (r25:r24) value for UBRR0H:L
@@ -21,8 +25,8 @@
 
 .global initUART
 initUART:
-  sts UBRR0H, r25                 //The UBRR0H and L registers control the baud rate
-  sts UBRR0L, r24                 //The UBRR0H and L registers control the baud rate
+  sts baudHigh, r25                 //The UBRR0H and L registers control the baud rate
+  sts baudLow, r24                 //The UBRR0H and L registers control the baud rate
   ldi r16, 1<<TXEN0 | 1<<RXEN0    //These bits in the UCSR0B register enables transmitting functions if set (Pin 1 on the arduino uno)
                                   //and receiving functions if set (Pin 0 on the arduino uno)
                                   //Set both bits if you want to enable both (also disable UCSZ03)

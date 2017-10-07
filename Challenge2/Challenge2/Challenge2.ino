@@ -2,13 +2,16 @@
 
 /*
    Challenge2.ino
-   WRITTEN FOR ARDUINO UNO
+   Written for ATmega328p (or Arduino UNO)
+   Written in Assembler because I have a death wish
    for working with an LED Bar Graph and shift registers in AVR assembler
    author: Robert Raffaele "GorrillaRibs" Miller
-   Sweet lord why can't we build it sir why
+   Sweet lord why can't it build bob why
+   like what the fuck
+   why am I even doing this
  */
 
-// The compiler still did not like this.
+// The compiler still did not like this, so commented out
 /*
  #define clock 0x02 // or pin 2
  #define latch 0x03 // or pin 3
@@ -26,21 +29,21 @@ uint8_t data2 = 0b00000001; // data for the first shift register, cathodes I can
 // NOBODY CARED ABOUT ME UNTIL I PUT ON THE MASK
 uint8_t mask = 0b00000001;
 // "Constants", for registers lower than 15
-uint8_t one = 0x01;
-uint8_t two = 0x02;
-uint8_t three = 0x03;
-uint8_t four = 0x04;
-uint8_t seven = 0x07;
-uint8_t eight = 0x08;
+uint8_t onee = 0x01;
+uint8_t twoo = 0x02;
+uint8_t threee = 0x03;
+uint8_t fourr = 0x04;
+uint8_t sevenn = 0x07;
+uint8_t eightt = 0x08;
 
 
 void setup() {
         asm (
                 "load: \n"
-                "LDS r1, one \n" // loading 'constants' for comparisons
-                "LDS r2, two \n" // who needs registers above r15 anyways
-                "LDS r3, three \n"
-                "LDS r4, four \n"
+                "LDS r1, onee \n" // loading constants for comparisons
+                "LDS r2, twoo \n" // who needs registers above r15 anyways
+                "LDS r3, threee \n"
+                "LDS r4, fourr \n"
 
                 "CLR r8 \n" // clear a zero register for comaparisons/clearing bytes
                 "LDS r21, mask \n"  // AND mask
@@ -52,7 +55,7 @@ void setup() {
                 "LDI r31, hi8(data2) \n" // AREN'T THEY BEUTIFUL
 
 
-                "sacrifice: \n" // to Cthulu, of course. Also the main loop
+                "sacrifice: \n" // To Cthulu, requires 4 goats. Also the main loop
                 "LDS r11, data1 \n"
                 "RCALL shiftOut\n"
 
@@ -140,8 +143,6 @@ void setup() {
                 "RET \n"
 
 
-
-
                 // ** shiftOut() ** \\
 
                 "shiftOutData: \n" // shift out the first  data var...
@@ -158,10 +159,10 @@ void setup() {
                 "CBI 0x0B, 0x03 \n" // set latch low
                 "CBI 0x0B, 0x02 \n" // set clock low
                 "MOV r15, r11 \n" // copy the data, so we dont destory it
-                "AND r15, r21 \n" // mask the data, so we only get one byte
+                "AND r15, r21 \n" // mask the data, so we only get oneee byte
                 "CP r15, r8 \n" // compare the ANDed data with zero
                 "BREQ set0 \n" // if equal to zero, go to set0...
-                "SBI 0x0B, 0x04 \n" // else, set the data pin to one
+                "SBI 0x0B, 0x04 \n" // else, set the data pin to onee
                 "RJMP back \n" // go to back
 
                 "set0: \n"
@@ -181,7 +182,7 @@ void setup() {
                 "stopShifting: \n" // here be a label
 
                 "INC r27 \n" // inc the loop counter
-                "CP r27, r1 \n" // check if it's one
+                "CP r27, r1 \n" // check if it's onee
                 "BREQ shiftOutData2 \n" // shift out data2
                 "SBI 0x0B, 0x03 \n" // set latch back to high
                 "RET \n"
@@ -203,7 +204,7 @@ void setup() {
                 "NOP \n"
 
 
-              );
+              ); // FUCK THIIIISSSSS
 
 }
 

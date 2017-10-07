@@ -6,10 +6,12 @@
 #include <ASCII.h>
 #define BAUD9600 103           //(((F_CPU / (BAUDRATE * 16))) - 1)
 #define data 65                //ASCII value translates to 'A' or '\A
-#define trig PB1
+#define trigger PB1
 #define echo PB0
 #define hi 0
 #define lo 0
+
+; All Serial functions load off of Regs 24 & 25
 
 ;gpLabel:
 ;.asciz  "32 GP Registers:\n"
@@ -44,17 +46,19 @@ RET
 loop:
 RJMP loop
 
+; Most of this code is shamelessly taken from out previous LED poject
+; untilizing input capture
 .global TIMER1_OVF_vect
 TIMER1_OVF_vect:
-LDI r16,hi ; load TCNT1 (Timer1's 2-byte counter)
-STS TCNT1H,r16 ; T1:2^16-(2^24/2^8/120)=64989=0xFDDD->120ovf/s=60Hz
-LDI r16,lo ; LED flashing at 24Hz does not seem to produce PoV
-STS TCNT1L,r16 ; even at 60Hz there appears to be some noticeable flicker
-IN r16,_SFR_IO_ADDR(PORTB) ; read the port
-LDI r17,1<<trig ; prepare the bit(s) to toggle
-EOR r16,r17 ; toggle the bit(s), leaving the others unaffected
-OUT _SFR_IO_ADDR(PORTB),r16 ; update the port
-MOV r25, r16 ; DATA?????
+LDI r16,hi
+STS TCNT1H,r16
+LDI r16,lo
+STS TCNT1L,r16
+IN r16,_SFR_IO_ADDR(PORTB)
+LDI r17,1<<trigger
+EOR r16,r17
+OUT _SFR_IO_ADDR(PORTB),r16
+MOV r25, r16 ; Data returns a null character, and I know not why
 CALL printChar
 CALL printLn
 RETI ; YETI
